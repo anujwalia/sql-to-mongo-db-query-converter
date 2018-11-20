@@ -71,6 +71,10 @@ public class SqlUtils {
             return normalizeValue((((StringValue)incomingExpression).getValue()),fieldType);
         } else if (Column.class.isInstance(incomingExpression)) {
             return normalizeValue(getStringValue(incomingExpression),fieldType);
+        } else if (SignedExpression.class.isInstance(incomingExpression)) {
+            SignedExpression signedExpression = (SignedExpression) incomingExpression;
+            String signedStringValue = signedExpression.getSign() + signedExpression.getExpression().toString();
+            return normalizeValue(Long.valueOf(signedStringValue),fieldType);
         } else {
             throw new ParseException("can not parseNaturalLanguageDate: " + incomingExpression.toString());
         }
